@@ -1,0 +1,9 @@
+.vscode/settings.json
+/PROJECT.md
+/AGENTS.md
+.venv/
+__pycache__/
+*.py[cod]
+.env
+*.sqlite3
+/PROJECT_CONTEXT.md
