@@ -41,6 +41,30 @@ python manage.py makemigrations --check --dry-run
 
 Mit `docker compose stop` wird PostgreSQL gestoppt; die Daten bleiben im benannten Volume erhalten.
 
+## Demo-Daten
+
+Der Seeder erzeugt einen deterministischen Datensatz für den Workshop. Er kann nur
+bei `DJANGO_DEBUG=1` ausgeführt werden:
+
+```powershell
+python manage.py seed_demo_data
+```
+
+Wenn Demo-Stationen bereits vorhanden sind, bricht der Befehl ohne Änderungen ab.
+Mit `--reset` werden ausschließlich Stationen mit dem reservierten `DEMO-`-Präfix
+und deren abhängige Daten ersetzt; Benutzer und Tags werden nicht gelöscht:
+
+```powershell
+python manage.py seed_demo_data --reset
+```
+
+Für Abfragen und Performance-Übungen kann der Seeder etwa 1.000 Messungen pro
+messendem Sensor erzeugen:
+
+```powershell
+python manage.py seed_demo_data --reset --large
+```
+
 ## Struktur und Umfang
 
 - `config/`: Einstellungen, URL-Konfiguration sowie ASGI- und WSGI-Einstiegspunkte.
