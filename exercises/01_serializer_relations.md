@@ -84,17 +84,14 @@ obj.measurements.count()
 
 ermitteln.
 
-## Challenge
+## Bonus 2
 
 Serialisieren Sie anschließend alle Stationen:
 
 ```python
 stations = Station.objects.all()
 
-StationSerializer(
-    stations,
-    many=True,
-).data
+....
 ```
 
 Überlegen Sie:
