@@ -194,4 +194,38 @@ class StationNestedWriteSerializer(StationWriteSerializer):
             metadata.save()
         return instance
 
+class StationOptionsDemoSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(required=True)
+    class Meta:
+        model = Station
+        fields = ["id", "code", "name", "created_at"]
+        extra_kwargs = {
+            "name": {"required": False},
+            "created_at": {"read_only": True},
+        }
+
+class StationDepthDemoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Station
+        fields = ["id", "code", "metadata"]
+        depth = 0
+
+class StationRepresentationDemoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Station
+        fields = ["id", "code", "latitude", "longitude", "active"]
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        if not self.context.get("include_coordinates", True):
+            representation.pop("latitude", None)
+            representation.pop("longitude", None)
+        return representation
+
+class SensorCountAnnotationDemoSerializer(serializers.ModelSerializer):
+    measurement_count = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Sensor
+        fields = ["id", "name", "measurement_count"]
 
