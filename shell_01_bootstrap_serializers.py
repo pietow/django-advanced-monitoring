@@ -4,7 +4,7 @@ from importlib import reload
 
 
 station = Station.objects.get(code="DEMO-ALPINE-01")
-sensor = station.sensors.get(name="Air temperature")
+sensor = station.sensors.get(name="Air temperature") # type: ignore
 owner = station.owner
 print(station.code, station.pk, sensor.pk, owner.pk)
 

@@ -7,7 +7,7 @@ User = get_user_model()
 alice = User.objects.get(username="workshop_alice")
 bob = User.objects.get(username="workshop_bob")
 station = Station.objects.get(code="DEMO-ALPINE-01")
-assert station.owner_id == alice.pk
+assert station.owner_id == alice.pk #type: ignore
 assert alice.is_active and bob.is_active
 assert not alice.is_staff and not bob.is_staff
 print(station.pk, station.code, alice.pk, bob.pk, station.active)
