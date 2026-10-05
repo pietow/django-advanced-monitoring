@@ -2,12 +2,11 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from monitoring.models import Sensor, Station
 from monitoring.api.serializers import (
-    SensorLinkDemoSerializer,
     StationSerializer,
     StationWriteSerializer,
 )
+from monitoring.models import Station
 
 
 class StationListView(APIView):
