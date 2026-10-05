@@ -7,9 +7,11 @@ from monitoring.api.serializers import (
     StationWriteSerializer,
 )
 from monitoring.models import Station
+from monitoring.api.permissions import IsStationOwnerOrReadOnly
 
 
 class StationListView(APIView):
+    permission_classes = [IsStationOwnerOrReadOnly]
     def get(self, request):
         stations = Station.objects.order_by("code")
         serializer = StationSerializer(stations, many=True)
@@ -18,24 +20,25 @@ class StationListView(APIView):
     def post(self, request):
         serializer = StationWriteSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        demo_station = get_object_or_404(Station, code="DEMO-ALPINE-01")
         serializer.save(owner=request.user)
         return Response(serializer.data, status=201)
 
 
 class StationDetailView(APIView):
+    permission_classes = [IsStationOwnerOrReadOnly]
     def get_object(self, request, pk):
         station = get_object_or_404(Station, pk=pk)
         self.check_object_permissions(request, station)
         return station
     
     def get(self, request, pk):
-        station = self.get_object(Station, pk=pk)
+        station = self.get_object(request, pk=pk)
         serializer = StationSerializer(station)
         return Response(serializer.data)
 
     def patch(self, request, pk):
-        station = self.get_object(Station, pk=pk)
+        station = self.get_object(request, pk=pk)
+        print('request.user ', request.user)
         serializer = StationWriteSerializer(
             station, data=request.data, partial=True,
         )
