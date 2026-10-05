@@ -24,16 +24,26 @@ class StationListView(APIView):
 
 
 class StationDetailView(APIView):
-    def get(self, request, pk):
+    def get_object(self, request, pk):
         station = get_object_or_404(Station, pk=pk)
+        self.check_object_permissions(request, station)
+        return station
+    
+    def get(self, request, pk):
+        station = self.get_object(Station, pk=pk)
         serializer = StationSerializer(station)
         return Response(serializer.data)
 
     def patch(self, request, pk):
-        station = get_object_or_404(Station, pk=pk)
+        station = self.get_object(Station, pk=pk)
         serializer = StationWriteSerializer(
             station, data=request.data, partial=True,
         )
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+
+    def delete(self, request, pk):
+        station = self.get_object(request, pk)
+        station.delete()
+        return Response(status=204)
