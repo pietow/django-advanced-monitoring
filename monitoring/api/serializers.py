@@ -101,8 +101,8 @@ User = get_user_model()
 class StationSerializer(serializers.ModelSerializer):
     owner = serializers.PrimaryKeyRelatedField(read_only=True)
     tags = serializers.SlugRelatedField(many=True, slug_field='name', read_only=True)
-    sensors = SensorSerializer(many=True)
-    elevation_m = serializers.FloatField(source='metadata.elevation_m')
+    sensors = SensorSerializer(many=True, read_only=True)
+    elevation_m = serializers.FloatField(source='metadata.elevation_m', allow_null=True, read_only=True)
 
     class Meta:
         model = Station

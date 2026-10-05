@@ -6,7 +6,7 @@ from monitoring.models import Sensor, Station
 from monitoring.api.serializers import (
     SensorLinkDemoSerializer,
     StationSerializer,
-    StationNestedWriteSerializer,
+    StationWriteSerializer,
 )
 
 
@@ -17,10 +17,10 @@ class StationListView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = StationNestedWriteSerializer(data=request.data)
+        serializer = StationWriteSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         demo_station = get_object_or_404(Station, code="DEMO-ALPINE-01")
-        serializer.save(owner=demo_station.owner)
+        serializer.save(owner=request.user)
         return Response(serializer.data, status=201)
 
 
@@ -32,18 +32,9 @@ class StationDetailView(APIView):
 
     def patch(self, request, pk):
         station = get_object_or_404(Station, pk=pk)
-        serializer = StationNestedWriteSerializer(
+        serializer = StationWriteSerializer(
             station, data=request.data, partial=True,
         )
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data)
-
-
-class SensorLinkDetailView(APIView):
-    def get(self, request, pk):
-        sensor = get_object_or_404(Sensor, pk=pk)
-        serializer = SensorLinkDemoSerializer(
-            sensor, context={"request": request},
-        )
         return Response(serializer.data)
