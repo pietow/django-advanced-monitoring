@@ -9,4 +9,9 @@ urlpatterns = [
         views.StationDetailView.as_view(),
         name="station-detail",
     ),
+    path(
+        "measurements/latest/",
+        views.LatestMeasurementsView.as_view(),
+        name="latest-measurements",
+    ),
 ]

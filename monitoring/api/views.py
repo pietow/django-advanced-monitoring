@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -8,6 +9,7 @@ from monitoring.api.serializers import (
 )
 from monitoring.models import Station
 from monitoring.api.permissions import IsStationOwnerOrReadOnly
+from monitoring.queries import fetch_latest_measurements 
 
 
 class StationListView(APIView):
@@ -50,3 +52,10 @@ class StationDetailView(APIView):
         station = self.get_object(request, pk)
         station.delete()
         return Response(status=204)
+
+class LatestMeasurementsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        rows = fetch_latest_measurements()
+        return Response(rows)

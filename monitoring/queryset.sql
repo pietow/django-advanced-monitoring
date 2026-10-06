@@ -1,0 +1,1 @@
+SELECT "monitoring_measurement"."id" ... Messwert AS "my_label" FROM "monitoring_measurement"
