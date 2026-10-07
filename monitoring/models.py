@@ -97,6 +97,7 @@ class StationMetadata(models.Model):
         return f"Metadata for {self.station.code}"
 
 
+
 class Sensor(models.Model):
     class SensorType(models.TextChoices):
         TEMPERATURE = "temperature", "Temperature"
@@ -126,6 +127,18 @@ class Sensor(models.Model):
     active = models.BooleanField(
         default=True,
     )
+
+    class Status(models.TextChoices):
+        UNKNOWN = "unknown", "Unknown"
+        ACTIVE = "active", "Active"
+        INACTIVE = "inactive", "Inactive"
+
+    status = models.CharField(
+        max_length=20,
+        choices=Status.choices,
+        default=Status.UNKNOWN,
+    )
+
 
     installed_at = models.DateField(
         null=True,
