@@ -14,4 +14,9 @@ urlpatterns = [
         views.LatestMeasurementsView.as_view(),
         name="latest-measurements",
     ),
+        path(
+        "stations/<int:pk>/sensor-health/",
+        views.SensorHealthView.as_view(),
+        name="sensor-health",
+    ),
 ]

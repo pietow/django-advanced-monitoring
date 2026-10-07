@@ -84,3 +84,15 @@ class StationWriteSerializer(serializers.ModelSerializer):
                 "Latitude and longitude must not both be zero."
             )
         return data
+    
+
+class SensorHealthQuerySerializer(serializers.Serializer):
+    start = serializers.DateTimeField()
+    end = serializers.DateTimeField()
+
+    def validate(self, attrs):
+        if attrs["start"] >= attrs["end"]:
+            raise serializers.ValidationError(
+                "start muss vor end liegen."
+            )
+        return attrs

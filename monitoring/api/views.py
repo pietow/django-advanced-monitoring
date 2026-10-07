@@ -4,12 +4,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from monitoring.api.serializers import (
+    SensorHealthQuerySerializer,
     StationSerializer,
     StationWriteSerializer,
 )
 from monitoring.models import Station
 from monitoring.api.permissions import IsStationOwnerOrReadOnly
-from monitoring.queries import fetch_latest_measurements 
+from monitoring.queries import fetch_latest_measurements
+from monitoring.reports import get_sensor_health 
 
 
 class StationListView(APIView):
@@ -58,4 +60,20 @@ class LatestMeasurementsView(APIView):
 
     def get(self, request):
         rows = fetch_latest_measurements()
+        return Response(rows)
+
+class SensorHealthView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        station = get_object_or_404(Station, pk=pk)
+
+        query = SensorHealthQuerySerializer(data=request.query_params)
+        query.is_valid(raise_exception=True)
+
+        rows = get_sensor_health(
+            station.code,
+            query.validated_data["start"], #type: ignore
+            query.validated_data["end"], #type: ignore
+        )
         return Response(rows)
