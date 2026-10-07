@@ -15,6 +15,11 @@ class Tag(models.Model):
 class Station(models.Model):
     name = models.CharField(max_length=120)
 
+    description = models.TextField(
+        blank=True,
+        default="",
+    )
+
     code = models.CharField(
         max_length=30,
         unique=True,
