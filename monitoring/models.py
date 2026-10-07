@@ -61,6 +61,15 @@ class Station(models.Model):
 
     def __str__(self):
         return f"{self.code} - {self.name}"
+    
+
+class ActiveStationCode(models.Model):
+    id = models.BigIntegerField(primary_key=True)
+    code = models.CharField(max_length=30)
+
+    class Meta:
+        managed = False
+        db_table = "active_station_codes"
 
 
 class StationMetadata(models.Model):
