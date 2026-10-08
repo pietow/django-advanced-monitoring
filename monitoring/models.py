@@ -160,6 +160,12 @@ class Sensor(models.Model):
         blank=True,
     )
 
+    calibration_offset = models.DecimalField(
+        max_digits=6,
+        decimal_places=3,
+        default=0,  # type: ignore
+    )
+
     def __str__(self):
         return f"{self.station.code} - {self.name}"
 
