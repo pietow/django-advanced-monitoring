@@ -212,3 +212,22 @@ class Measurement(models.Model):
             f"{self.timestamp:%Y-%m-%d %H:%M} - "
             f"{self.value}"
         )
+
+class ActiveCalibratedSensor(models.Model):
+    id = models.BigIntegerField(
+        primary_key=True,
+    )
+    name = models.CharField(
+        max_length=100,
+    )
+    calibration_offset = models.DecimalField(
+        max_digits=6,
+        decimal_places=3,
+    )
+    station_code = models.CharField(
+        max_length=30,
+    )
+
+    class Meta:
+        managed = False
+        db_table = "active_calibrated_sensors"
