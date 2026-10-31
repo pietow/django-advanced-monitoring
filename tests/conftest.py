@@ -43,7 +43,15 @@ def other_station(other_user):
     )
 
 
-
 @pytest.fixture
 def api_client():
     return APIClient()
+
+
+@pytest.fixture
+def staff_user(db):
+    return User.objects.create_user(
+        username="admin",
+        password="test-password",
+        is_staff=True,
+    )
