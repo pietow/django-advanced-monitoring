@@ -56,6 +56,9 @@ def test_other_user_cannot_patch_station(
         ("other", "patch", 403),
         ("owner", "patch", 200),
         ("staff", "patch", 200),
+        ("other", "delete", 403),
+        ("owner", "delete", 204),
+        ("staff", "delete", 204),
     ],
 )
 def test_station_permission_matrix(
@@ -97,8 +100,12 @@ def test_station_permission_matrix(
             format="json",
         )
 
+    elif method == "delete":
+        response = api_client.delete(url)
+
     else:
         pytest.fail(f"Unbekannte HTTP-Methode: {method}")
 
     assert response.status_code == expected_status
+
 

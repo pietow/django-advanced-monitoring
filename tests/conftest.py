@@ -6,6 +6,18 @@ from rest_framework.test import APIClient
 from monitoring.models import Station
 
 
+# autouse=True: pytest wendet diese Fixture automatisch auf jeden Test an,
+# ohne dass ein Test sie als Parameter anfordern muss.
+# Der Standard-Hasher (PBKDF2, 1 Mio. Iterationen) braucht pro create_user()
+# ca. 1-2 s. MD5 ist unsicher, für Testdaten aber ausreichend und schnell.
+# Die settings-Fixture von pytest-django setzt den Wert nach jedem Test zurück.
+@pytest.fixture(autouse=True)
+def fast_password_hasher(settings):
+    settings.PASSWORD_HASHERS = [
+        "django.contrib.auth.hashers.MD5PasswordHasher",
+    ]
+
+
 @pytest.fixture
 def user(db):
     return User.objects.create_user(
