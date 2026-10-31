@@ -73,7 +73,7 @@ class SensorHealthView(APIView):
 
         rows = get_sensor_health(
             station.code,
-            query.validated_data["start"], #type: ignore
-            query.validated_data["end"], #type: ignore
+            query.validated_data["start"],
+            query.validated_data["end"],
         )
         return Response(rows)
