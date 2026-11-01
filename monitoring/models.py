@@ -40,6 +40,7 @@ class Station(models.Model):
         on_delete=models.PROTECT,
         related_name="stations",
     )
+    owner_id: int # durch django erzeugt; für type checker hier definiert
 
     tags = models.ManyToManyField(
         Tag,
