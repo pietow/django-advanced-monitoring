@@ -7,3 +7,6 @@ __pycache__/
 .env
 *.sqlite3
 /PROJECT_CONTEXT.md
+/build/
+/dist/
+*.egg-info/
