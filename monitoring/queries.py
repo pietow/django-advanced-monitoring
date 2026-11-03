@@ -2,6 +2,15 @@ from django.db import connection
 
 
 def dictfetchall(cursor) -> list[dict[str, object]]:
+    """Lese die verbleibenden Cursor-Zeilen als Dictionaries.
+
+    Der Cursor muss zuvor eine Abfrage mit Ergebnisspalten ausgeführt haben.
+    Die Spaltennamen aus ``cursor.description`` werden zu Dictionary-Schlüsseln.
+
+    :param cursor: Bereits ausgeführter Datenbank-Cursor.
+    :returns: Eine Liste von Dictionaries; bei leerem Ergebnis eine leere Liste.
+    """
+    
     columns = [column[0] for column in cursor.description]
     return [
         dict(zip(columns, row, strict=True))
