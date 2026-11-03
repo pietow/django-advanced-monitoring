@@ -11,5 +11,6 @@ Diese Dokumentation richtet sich an Teams, die unsere Django-App einbinden.
 
    installation
    reference
+   sensor-health
 
 
