@@ -33,13 +33,20 @@ bereitgestellte Umgebung beziehungsweise die IT prüfen.
 Falls das Repository noch nicht lokal vorliegt, in einem eigenen Arbeitsordner:
 
 ```powershell
-git clone https://github.com/pietow/django-advanced-monitoring.git
-Set-Location django-advanced-monitoring
+git clone --branch livecode https://github.com/pietow/django-advanced-monitoring.git
 ```
 
-Bei einem vorhandenen Checkout direkt den Projektordner mit `manage.py` öffnen.
-Vor dem ersten Datenbankaufbau den im Kurs genannten Git-Startstand verwenden.
-Der erste Serializer-Block beginnt bei `00-starter`. Eigene Änderungen vorher sichern.
+Bei einem vorhandenen Checkout eigene Änderungen sichern und im Projektordner
+auf den Branch `livecode` wechseln:
+
+```powershell
+git fetch origin
+git switch livecode
+```
+
+Der Workshop beginnt auf dem Branch `livecode`. `clone` und `git fetch` laden auch
+den Branch `main` und alle Kursstände (Tags) herunter. Bei Bedarf wechselt
+`git switch main` auf `main`.
 
 ## Projektumgebung einrichten
 
@@ -88,7 +95,7 @@ ein Reset ist für den normalen Start nicht erforderlich.
 Die Admin-Oberfläche ist unter <http://127.0.0.1:8000/admin/> erreichbar.
 Für einen eigenen Admin-Zugang bei Bedarf in einem zweiten Terminal mit
 aktivierter virtueller Umgebung `python manage.py createsuperuser` ausführen.
-Im Stand `00-starter` sind noch keine Workshop-API-Endpunkte eingerichtet.
+Im Startstand sind noch keine Workshop-API-Endpunkte eingerichtet.
 
 Der Arbeitsplatz ist vorbereitet, wenn PostgreSQL erreichbar ist, die Checks
 keine Probleme melden und der Entwicklungsserver startet. Den Server mit
