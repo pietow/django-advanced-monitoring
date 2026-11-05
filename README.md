@@ -106,6 +106,17 @@ Weiterführende Hinweise zur bereitgestellten Windows-Umgebung:
 [Windows-Version ermitteln](https://learn.microsoft.com/windows/client-management/client-tools/windows-version-search),
 [Docker-Systemvoraussetzungen](https://docs.docker.com/desktop/setup/install/windows-install/#system-requirements).
 
+## Auf PostgreSQL zugreifen
+
+Im Projektordner bei laufendem Datenbank-Container:
+
+```powershell
+docker compose exec db psql -U monitoring -d monitoring
+```
+
+Benutzer und Datenbankname gegebenenfalls an die Werte der lokalen `.env` anpassen.
+Mit `\q` wird psql wieder verlassen.
+
 ## Demo-Daten
 
 Der Seeder erzeugt einen deterministischen Datensatz für den Workshop. Er kann nur
