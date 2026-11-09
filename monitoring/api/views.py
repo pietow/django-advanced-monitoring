@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from monitoring.api.permissions import IsStationOwnerOrReadOnly
 
 from monitoring.models import Sensor, Station
 from monitoring.api.serializers import (
@@ -14,6 +15,8 @@ User = get_user_model()
 
 
 class StationListView(APIView):
+    permission_classes = [IsStationOwnerOrReadOnly]
+
     def get(self, request):
         stations = Station.objects.order_by("code")
         serializer = StationSerializer(stations, many=True)
