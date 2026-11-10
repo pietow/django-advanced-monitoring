@@ -34,6 +34,14 @@ class StationListView(APIView):
 
 
 class StationDetailView(APIView):
+    permission_classes = [IsStationOwnerOrReadOnly]
+
+
+    def get_object(self, request, pk):
+        station = get_object_or_404(Station, pk=pk)
+        self.check_object_permissions(request, station)
+        return station
+
     def get(self, request, pk):
         station = get_object_or_404(Station, pk=pk)
         serializer = StationSerializer(station)
