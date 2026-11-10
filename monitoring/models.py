@@ -46,6 +46,11 @@ class Station(models.Model):
         default=True,
     )
 
+    description = models.TextField(
+        blank=True,
+        default="",
+    )
+
     created_at = models.DateTimeField(
         auto_now_add=True,
     )
@@ -56,6 +61,14 @@ class Station(models.Model):
 
     def __str__(self):
         return f"{self.code} - {self.name}"
+
+class ActiveStationCode(models.Model):
+    id = models.BigIntegerField(primary_key=True)
+    code = models.CharField(max_length=30)
+
+    class Meta:
+        managed = False
+        db_table = "active_station_codes"
 
 
 class StationMetadata(models.Model):
@@ -121,6 +134,19 @@ class Sensor(models.Model):
     active = models.BooleanField(
         default=True,
     )
+
+
+    class Status(models.TextChoices):
+        UNKNOWN = "unknown", "Unknown"
+        ACTIVE = "active", "Active"
+        INACTIVE = "inactive", "Inactive"
+
+    status = models.CharField(
+        max_length=20,
+        choices=Status.choices,
+        default=Status.UNKNOWN
+    )
+
 
     installed_at = models.DateField(
         null=True,
