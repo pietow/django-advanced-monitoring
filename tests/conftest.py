@@ -54,3 +54,9 @@ def other_station(other_user):
         latitude=Decimal("52.100000"),
         longitude=Decimal("8.100000"),
     )    
+
+@pytest.fixture(autouse=True)
+def fast_password_hasher(settings):
+    settings.PASSWORD_HASHERS = [
+        "django.contrib.auth.hashers.MD5PasswordHasher"
+    ]

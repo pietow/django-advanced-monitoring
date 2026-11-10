@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=77"] #version 77 versteht moderne Lizenz angaben PEP639
+build-backend = "setuptools.build_meta"    # was davon aufgerufen wird 
+# Backend des Packetbaus
+[project]
+name = "django-workshop-monitoring"
+version = "0.1.0rc1"
+description = "Monitoring app for the advanced Django workshop"
+readme = "README-package.md" # für metadaten: Beschreibung für PyPI und TestPyPI auf der Paketseite
+requires-python = ">=3.14"
+dependencies = [
+    "Django>=5.2,<5.3",
+    "djangorestframework>=3.17,<3.18",
+]
+
+[project.optional-dependencies]
+postgres = ["psycopg[binary]>=3.3,<4"]
+
+[tool.setuptools]
+include-package-data = false  #true: files are included via the MANIFEST.in file
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["monitoring", "monitoring.*"]
+namespaces = false
