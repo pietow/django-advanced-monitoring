@@ -92,3 +92,9 @@ Zeitstempel und Qualitätskennzeichnung. `Tag` dient zur Einordnung von Statione
 **M:N** bedeutet: Eine Station kann mehrere Tags haben, und ein Tag kann mehreren
 Stationen zugeordnet sein.
 
+## Teilnehmerskript und Übungen
+
+- [Teilnehmerskript](Teilnehmerskript.pdf): Begleitdokument zum Workshop.
+- [Übung/](Übung/): Aufgaben zu Serializer-Beziehungen, PATCH-Verträgen, Berechtigungen,
+  Migrationen, Datenbanktests, Packaging und Sphinx-Berichten.
+
