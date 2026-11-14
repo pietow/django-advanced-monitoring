@@ -97,4 +97,5 @@ Stationen zugeordnet sein.
 - [Teilnehmerskript](Teilnehmerskript.pdf): Begleitdokument zum Workshop.
 - [Übung/](Übung/): Aufgaben zu Serializer-Beziehungen, PATCH-Verträgen, Berechtigungen,
   Migrationen, Datenbanktests, Packaging und Sphinx-Berichten.
+- Nachtrag des Sphinx-Abschnitts: Sphinx.md 
 
