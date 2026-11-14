@@ -173,3 +173,15 @@ erDiagram
 | `Measurement` | N:1 | `Sensor` | `ForeignKey` |
 
 Django setzt die M:N-Beziehung zwischen Station und Tag über eine automatisch angelegte Zwischentabelle um.
+
+**N:1** bedeutet: Mehrere Datensätze können demselben Zielobjekt zugeordnet sein.
+**1:1** bedeutet hier: Jede Station kann höchstens einen Metadatensatz haben.
+**M:N** bedeutet: Eine Station kann mehrere Tags haben, und ein Tag kann mehreren
+Stationen zugeordnet sein.
+
+## Teilnehmerskript und Übungen
+
+- [Teilnehmerskript](Teilnehmerskript.pdf): Begleitdokument zum Workshop.
+- [Übung/](Übung/): Aufgaben zu Serializer-Beziehungen, PATCH-Verträgen, Berechtigungen,
+  Migrationen, Datenbanktests, Packaging und Sphinx-Berichten.
+- Nachtrag des Sphinx-Abschnitts: Sphinx.md 
