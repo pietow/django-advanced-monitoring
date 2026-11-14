@@ -1,0 +1,227 @@
+{
+  "info": {
+    "name": "Serializer - HTTP-Demos",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Environment \"Serializer - lokal\" aktivieren. Requests einzeln in der Reihenfolge der Übung ausführen. basis_url endet mit /. Vor wiederholten POSTs write_code bzw. nested_code auf einen noch freien Wert ändern."
+  },
+  "auth": {
+    "type": "noauth"
+  },
+  "item": [
+    {
+      "name": "2.10 Lesen",
+      "item": [
+        {
+          "name": "Stationen auflisten",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{basis_url}}api/stations/",
+            "description": "Zuerst senden: setzt station_id fuer Alpine."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const data = pm.response.json();",
+                  "    const rows = Array.isArray(data) ? data : [data];",
+                  "    const station = rows.find(s => s.code === \"DEMO-ALPINE-01\");",
+                  "    if (station) {",
+                  "        pm.environment.set(\"station_id\", String(station.id));",
+                  "        const sensors = station.sensors || [];",
+                  "        const sensor = sensors.find(s => s.name === \"Air temperature\");",
+                  "        if (sensor) {",
+                  "            pm.environment.set(\"sensor_id\", String(sensor.id));",
+                  "        }",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Station anzeigen",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{basis_url}}api/stations/{{station_id}}/",
+            "description": ""
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const data = pm.response.json();",
+                  "    const rows = Array.isArray(data) ? data : [data];",
+                  "    const station = rows.find(s => s.code === \"DEMO-ALPINE-01\");",
+                  "    if (station) {",
+                  "        pm.environment.set(\"station_id\", String(station.id));",
+                  "        const sensors = station.sensors || [];",
+                  "        const sensor = sensors.find(s => s.name === \"Air temperature\");",
+                  "        if (sensor) {",
+                  "            pm.environment.set(\"sensor_id\", String(sensor.id));",
+                  "        }",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Sensor mit Stationslink",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{basis_url}}api/sensor-links/{{sensor_id}}/",
+            "description": "sensor_id muss zuvor gesetzt sein."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3.8-3.9 Schreiben",
+      "item": [
+        {
+          "name": "Station anlegen",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{basis_url}}api/stations/",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"{{write_code}}\",\n  \"name\": \"HTTP station\",\n  \"latitude\": \"47.421000\",\n  \"longitude\": \"11.231000\",\n  \"active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const data = pm.response.json();",
+                  "    pm.environment.set(\"write_station_id\", String(data.id));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Station partiell aendern",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{basis_url}}api/stations/{{write_station_id}}/",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"active\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3.13 Nested Writes",
+      "item": [
+        {
+          "name": "Station mit Metadaten anlegen",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{basis_url}}api/stations/",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"{{nested_code}}\",\n  \"name\": \"Nested HTTP station\",\n  \"latitude\": \"47.421000\",\n  \"longitude\": \"11.231000\",\n  \"metadata\": {\n    \"elevation_m\": 1840.0,\n    \"operator\": \"Workshop\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const data = pm.response.json();",
+                  "    pm.environment.set(\"nested_station_id\", String(data.id));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Metadaten partiell aendern",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{basis_url}}api/stations/{{nested_station_id}}/",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"metadata\": {\n    \"operator\": \"Field team\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
